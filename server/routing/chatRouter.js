@@ -7,8 +7,4 @@ router.get('/chat', (req, res) => {
     res.sendFile(path.join(__dirname, '../view/chat.html'));
 });
 
-router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../view/index.html'));
-});
-
 module.exports = router;

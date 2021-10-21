@@ -3,7 +3,7 @@ const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
 const mongoose = require('mongoose');
-const cors = reqire('cors');
+const cors = require('cors');
 const cfg = require('./cfg.json');
 const chatRouter = require('./routing/chatRouter');
 const dashboardRouter = require('./routing/dashboardRouter');
@@ -36,6 +36,10 @@ app.use(cors());
 // Set up express routing
 app.use('/chat', chatRouter);
 app.use('/dashboard', dashboardRouter);
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, './view/index.html'));
+});
 
 app.use(function(req, res){
   res.send(404);
