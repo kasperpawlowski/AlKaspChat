@@ -21,6 +21,18 @@ function saveEvent(type, {username='', id='', room=''}) {
     });
 };
 
+function retrieveEvents() {
+    return new Promise((resolve, reject) => {
+        ChatEvent.find({}, (err, results) => {
+            if(err) {
+                reject(err); 
+                return;
+            }
+            resolve(results);
+        });
+    });
+}
+
 function saveMessage({username, id, room}, message) {
     let recipients = userUtil.getRoomUsers(room)
                              .filter(user => user.username !== username)
@@ -47,4 +59,16 @@ function saveMessage({username, id, room}, message) {
     });
 };
 
-module.exports = {saveEvent, saveMessage};
+function retrieveHistory() {
+    return new Promise((resolve, reject) => {
+        ChatMessage.find({}, (err, results) => {
+            if(err) {
+                reject(err); 
+                return;
+            }
+            resolve(results);
+        });
+    });
+}
+
+module.exports = {saveEvent, retrieveEvents, saveMessage, retrieveHistory};

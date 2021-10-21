@@ -3,8 +3,10 @@ const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
 const mongoose = require('mongoose');
+const cors = reqire('cors');
 const cfg = require('./cfg.json');
-const router = require('./routing/chatRouter');
+const chatRouter = require('./routing/chatRouter');
+const dashboardRouter = require('./routing/dashboardRouter');
 const messageUtil = require('./utils/message');
 const mongooseUtil = require('./utils/mongoose');
 const {
@@ -28,8 +30,16 @@ mongoose.connect(cfg.mongoDBConnectionString, { useNewUrlParser: true})
 // Set static folders
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Allow cross origin requests with react
+app.use(cors());
+
 // Set up express routing
-app.use('/', router);
+app.use('/chat', chatRouter);
+app.use('/dashboard', dashboardRouter);
+
+app.use(function(req, res){
+  res.send(404);
+});
 
 // Install event handlers when socket connection with the client established
 io.on('connection', socket => {
@@ -118,5 +128,5 @@ io.on('connection', socket => {
   });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 server.listen(PORT, () => console.log(`Server running on localhost:${PORT}`));
