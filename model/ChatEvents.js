@@ -1,4 +1,4 @@
-//changes///
+
 const mongoose= require('mongoose');
 
 const chatEventSchema = new mongoose.Schema({
@@ -29,4 +29,5 @@ const chatEventSchema = new mongoose.Schema({
 });
 
 const ChatEvent = mongoose.model('ChatEvent', chatEventSchema, 'Events');
+
 module.exports = ChatEvent;
