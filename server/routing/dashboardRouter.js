@@ -13,7 +13,7 @@ router.get('/:type', (req, res) => {
             promise = mongooseUtil.retrieveHistory();
             break;
         default:
-            res.status(500).send('Data type error');
+            res.json({error: 'Data type error'});
             return;
     }
 

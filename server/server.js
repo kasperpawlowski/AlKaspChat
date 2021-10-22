@@ -30,12 +30,9 @@ mongoose.connect(cfg.mongoDBConnectionString, { useNewUrlParser: true})
 // Set static folders
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Allow cross origin requests with react
-app.use(cors());
-
 // Set up express routing
 app.use('/chat', chatRouter);
-app.use('/dashboard', dashboardRouter);
+app.use('/dashboard', cors(), dashboardRouter);
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, './view/index.html'));

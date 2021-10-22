@@ -1,9 +1,13 @@
 const changeSelector = document.getElementById('change-selector');
 const leaveBtn = document.getElementById('leave-btn');
+const dashboardBtn = document.getElementById('dashboard-btn');
 const chatForm = document.getElementById('chat-form');
 const chatMessages = document.getElementById('chat-messages');
 const roomName = document.getElementById('room-name');
 const userList = document.getElementById('users');
+
+// React App Host
+const REACT_APP_HOST = 'http://localhost:3000';
 
 // Initialization
 const socket = io();
@@ -60,7 +64,7 @@ changeSelector.addEventListener('change', () => {
   room = changeSelector.options[changeSelector.selectedIndex].innerText;
 
   // For consistency set appropriate URL without page reloading (socket disconnection)
-  window.history.replaceState({}, '', `chat?username=${encodeURIComponent(username)}&room=${encodeURIComponent(room)}`);
+  history.replaceState({}, '', `chat?username=${encodeURIComponent(username)}&room=${encodeURIComponent(room)}`);
 
   // Clear messages
   chatMessages.innerHTML = '';
@@ -69,7 +73,12 @@ changeSelector.addEventListener('change', () => {
 
 // Listen for leaving the chat, redirect to the main page
 leaveBtn.addEventListener('click', () => {
-    window.location = '../index.html';
+    history.back();
+});
+
+// Listen for redirection to React dashboard app, pretend that we're still in the same app
+dashboardBtn.addEventListener('click', () => {
+  location.assign(REACT_APP_HOST);
 });
 
 // Display message on DOM
