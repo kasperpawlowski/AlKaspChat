@@ -19,7 +19,7 @@ router.get('/:type', (req, res) => {
 
     promise.then(result => {
         res.json(result);
-    }).catch(err => res.status(501).send('Database error'));
+    }).catch(err => res.json('Database error'));
 });
 
 module.exports = router;

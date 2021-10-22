@@ -16,10 +16,9 @@ a {
 }
 
 /* Chat Page */
-
 .chat-container {
 	max-width: 1100px;
-	background: #fff;
+	background: var(--light-color);
 	margin: 30px auto;
 	overflow: hidden;
 }
@@ -63,6 +62,7 @@ a {
 }
 
 .chat-messages-container {
+	background: #fff;
 	padding: 30px;
 	max-height: 500px;
 	overflow-y: scroll;
@@ -84,7 +84,6 @@ a {
 }
 
 .chat-messages-container .message .text {
-
 	color: #fff;
 }
 
@@ -154,6 +153,52 @@ a {
 .join-main .btn {
 	margin-top: 20px;
 	width: 100%;
+}
+
+.dashboard-navigation {
+	width: 90vw;
+	margin: auto auto 5vh auto;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: center;
+}
+
+.dashboard-navigation button {
+	cursor: pointer;
+	display: block;
+	color: var(--dark-color-a);
+	background: var(--light-color);
+	border: 1px solid var(--dark-color-a);
+	text-align: center;
+	width: 50vw;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.dashboard-table {
+	width: 90vw;
+	height: 80vh;
+	margin: auto;
+}
+
+.MuiDataGrid-root{
+	border: 1px solid var(--dark-color-a) !important;	
+	color: var(--dark-color-a) !important;
+}
+
+.MuiDataGrid-columnsContainer, .MuiDataGrid-cell {
+	border: 1px solid var(--dark-color-a) !important;
+}
+
+.MuiDataGrid-columnsContainer {
+	background: var(--dark-color-a) !important;
+	color: #fff;
+}
+
+.MuiTablePagination-root {
+	color: var(--dark-color-a) !important;
 }
 
 @media (max-width: 700px) {
