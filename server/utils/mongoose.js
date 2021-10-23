@@ -3,14 +3,16 @@ const ChatEvent = require('../model/ChatEvents');
 const ChatMessage = require('../model/ChatHistory');
 const userUtil = require('./user');
 
-function saveEvent(type, {username='', id='', room=''}) {
+function saveEvent(type, {username='', id='', room='', _id=''}) {
     let chatEvent = new ChatEvent({
         type: type,
         date: moment().format('YYYY/MM/DD'),
         time: moment().format('HH:mm:ss'),
         username: username,
         socketId: id,
-        chatroom: room
+        chatroom: room,
+        _id: _id
+
     });
 
     chatEvent.save().then(() => {
