@@ -2,18 +2,11 @@ import React, {useState, useEffect} from 'react';
 import DashboardNavigation from './DashboardNavigation';
 import EventsTable from './EventsTable';
 import HistoryTable from './HistoryTable';
+import '../App.css';
 
-const BACKEND_HOST = 'http://localhost:3001';
+const BACKEND_HOST = 'http://localhost:3000';
 
 function Dashboard() {
-    const logoutButtonContainerStyle = {
-        width: '90vw',
-        margin: 'auto auto 1vh auto',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'right'
-    }
-
     const [selected, setSelected] = useState('events');
     const [events, setEvents] = useState([]);
     const [history, setHistory] = useState([]);
@@ -30,23 +23,20 @@ function Dashboard() {
     }
 
     useEffect(() => {
-        fetch(`${BACKEND_HOST}/dashboard/${selected}`).then(response => {
+        fetch(`${BACKEND_HOST}/dashboard/${selected}`).then(async (response) => {
+            if(!response.ok) throw new Error(response.statusText);
             return response.json();
         }).then(data => {
-            if(data.error) throw new Error(data.error);
-            if(selected === 'events') {
-                setEvents(data);
-            } else {
-                setHistory(data);
-            }
+            if(selected === 'events') setEvents(data);
+            else setHistory(data);
         }).catch(err => {
-            alert(`Error: ${err.message}`);
+            console.log(`Error: ${err.message}`);
         });
     }, [selected]);
 
     return (
         <>
-            <div style={logoutButtonContainerStyle}>
+            <div className="logout-button-container">
                 <button className="btn" onClick={() => window.history.back()}>GO BACK</button>
             </div>
             <DashboardNavigation selected={selected} handleSelected={handleSelected} />

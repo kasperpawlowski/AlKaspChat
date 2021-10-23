@@ -7,7 +7,7 @@ const roomName = document.getElementById('room-name');
 const userList = document.getElementById('users');
 
 // React App Host
-const REACT_APP_HOST = 'http://localhost:3000';
+const REACT_APP_HOST = 'http://localhost:3001';
 
 // Initialization
 const socket = io();

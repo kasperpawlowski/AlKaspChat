@@ -23,9 +23,9 @@ const io = socketio(server);
 
 // Connect to DB
 mongoose.connect(cfg.mongoDBConnectionString, { useNewUrlParser: true})
-    .then( ()    => {console.log("Mongoose connected successfully");},
-           error => {console.log("Moongoose could not connect to the database: " + error);}
-         );
+        .then( ()    => {console.log("Mongoose connected successfully");},
+               error => {console.log("Moongoose could not connect to the database: " + error);}
+            );
 
 // Set static folders
 app.use(express.static(path.join(__dirname, 'public')));
@@ -129,5 +129,5 @@ io.on('connection', socket => {
   });
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`Server running on localhost:${PORT}`));

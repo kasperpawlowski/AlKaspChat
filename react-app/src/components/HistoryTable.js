@@ -1,6 +1,5 @@
 import React from 'react';
 import { DataGrid } from "@material-ui/data-grid";
-import '../index.css';
 import '../App.css';
 
 function HistoryTable(props) {
@@ -36,7 +35,7 @@ function HistoryTable(props) {
 
     return (
         <div className="dashboard-table">
-            <DataGrid rows={rows(props.content)} columns={columns()} pageSize={25} rowsPerPageOptions={[]} />
+            <DataGrid rows={rows(props.content)} columns={columns()} pageSize={25} rowsPerPageOptions={[25]} />
         </div>
     );
 }
