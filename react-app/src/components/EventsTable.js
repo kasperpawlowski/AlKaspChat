@@ -5,6 +5,7 @@ import '../App.css';
  function EventsTable(props) {
     const columns =()=> {
         return [
+           
             {field: "socketId", headerName: "Socket ID", width: 200 },
             {field: "type", headerName: "Type", width: 200},
             {field: "date", headerName: "Date", width: 200},
@@ -18,6 +19,7 @@ const rows =(content) =>{
 
     return content.map(msg => {
         return {
+            id: msg._id,
             socketId: msg.socketId,
             type: msg.type,
             date: msg.date,
@@ -33,7 +35,6 @@ const rows =(content) =>{
         <DataGrid rows={rows(props.content)}
         columns={columns()} pageSize={25}   
         rowsPerPageOptions={[25]}/>
-
         </div>
     );
 }
