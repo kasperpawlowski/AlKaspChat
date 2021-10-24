@@ -24,13 +24,7 @@ const chatEventSchema = new mongoose.Schema({
     chatroom: {
         type: String,
         default: ''
-    },
-    
-    _id: {
-        type: String,
-        default: ''
     }
-    
 });
 
 const ChatEvent = mongoose.model('ChatEvent', chatEventSchema, 'Events');
