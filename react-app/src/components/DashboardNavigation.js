@@ -1,13 +1,7 @@
 import React, {useState} from 'react';
-import '../index.css';
-import '../App.css';
+import Button from './Button';
 
 function DashboardNavigation(props) {
-    const style = {
-        background: 'var(--dark-color-a)',
-        color: '#fff',
-    }
-
     const [selected, setSelected] = useState(props.selected);
 
     const handleClick = (selected) => {
@@ -15,17 +9,20 @@ function DashboardNavigation(props) {
         props.handleSelected(selected);
     }
 
+    const style = {
+        background: 'var(--dark-color-a)',
+        color: '#fff',
+    }
+
     return (
         <div className="dashboard-navigation">
-            <button style={selected === 'events' ? style : {}} 
-                    onClick={() => handleClick('events')}>
-                    Event History
-            </button>
+            <Button style={selected === 'events' ? style : {}} 
+                    clickHandler={() => handleClick('events')} 
+                    text='Event History' />
 
-            <button style={selected === 'history' ? style : {}} 
-                    onClick={() => handleClick('history')}>
-                    Chat History
-            </button>
+            <Button style={selected === 'history' ? style : {}} 
+                    clickHandler={() => handleClick('history')} 
+                    text='Chat History' />
         </div>
     );
 }
