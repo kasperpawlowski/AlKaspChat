@@ -5,14 +5,13 @@ import '../App.css';
  function EventsTable(props) {
     const columns =()=> {
         return [
-           
-            {field: "socketId", headerName: "Socket ID", width: 200 },
-            {field: "type", headerName: "Type", width: 200},
             {field: "date", headerName: "Date", width: 200},
             {field: "time", headerName: "Time", width: 180},
+            {field: "type", headerName: "Type", width: 200},
+            {field: "socketId", headerName: "Socket ID", width: 200 },
             {field: "username", headerName: "Username", width: 300},
             {field: "chatroom", headerName: "Chatroom", width: 300}
-        ].map(col =>({...col, headerAlign: "center"}));
+        ].map(col =>({...col, headerAlign: "center", flex: 1}));
     }
 const rows =(content) =>{
     if(!content) return [];

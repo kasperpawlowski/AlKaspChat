@@ -12,7 +12,7 @@ function HistoryTable(props) {
             {field: "recipients", headerName: "Recipients", width: 200,},
             {field: "message", headerName: "Message", width: 500},
             {field: "chatroom", headerName: "Chatroom", width: 200}
-        ].map(col => ({...col, headerAlign: 'center'}));
+        ].map(col => ({...col, headerAlign: 'center', flex: 1}));
     }
 
     const rows = (content) => {
