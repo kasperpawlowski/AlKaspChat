@@ -2,11 +2,10 @@ import React, {useState, useEffect} from 'react';
 import DashboardNavigation from './DashboardNavigation';
 import EventsTable from './EventsTable';
 import HistoryTable from './HistoryTable';
-import '../App.css';
+import Button from './Button';
+import cfg from '../cfg.json';
 
-const BACKEND_HOST = 'http://localhost:3000';
-
-function Dashboard() {
+function Dashboard(props) {
     const [selected, setSelected] = useState('events');
     const [events, setEvents] = useState([]);
     const [history, setHistory] = useState([]);
@@ -23,7 +22,10 @@ function Dashboard() {
     }
 
     useEffect(() => {
-        fetch(`${BACKEND_HOST}/dashboard/${selected}`).then(async (response) => {
+        const timer = setTimeout(() => {alert(`${cfg.chatName} not responding`)}, 8000);
+
+        fetch(`${cfg.backendHost}/dashboard/${selected}`).then(async (response) => {
+            clearTimeout(timer);
             if(!response.ok) throw new Error(response.statusText);
             return response.json();
         }).then(data => {
@@ -37,10 +39,12 @@ function Dashboard() {
     return (
         <>
             <div className="logout-button-container">
-                <button className="btn" onClick={() => window.history.back()}>GO BACK</button>
+                <Button clickHandler={() => props.history.goBack()} text='GO BACK' />
             </div>
             <DashboardNavigation selected={selected} handleSelected={handleSelected} />
-            {selected === 'events' ? <EventsTable content={events}/> : <HistoryTable content={history}/>}
+            {selected === 'events' ? 
+            <EventsTable content={events}/> : 
+            <HistoryTable content={history}/>}
         </>
     );
 }

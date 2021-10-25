@@ -1,11 +1,9 @@
-const path = require('path');
 const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const cfg = require('./cfg.json');
-const chatRouter = require('./routing/chatRouter');
 const dashboardRouter = require('./routing/dashboardRouter');
 const messageUtil = require('./utils/message');
 const mongooseUtil = require('./utils/mongoose');
@@ -19,7 +17,12 @@ const {
 // Initialization
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server);
+const io = socketio(server, {
+  cors: {
+    origin: cfg.frontendHost,
+    methods: ["GET", "POST"]
+  }
+});
 
 // Connect to DB
 mongoose.connect(cfg.mongoDBConnectionString, { useNewUrlParser: true})
@@ -27,16 +30,9 @@ mongoose.connect(cfg.mongoDBConnectionString, { useNewUrlParser: true})
                error => {console.log("Moongoose could not connect to the database: " + error);}
             );
 
-// Set static folders
-app.use(express.static(path.join(__dirname, 'public')));
-
 // Set up express routing
-app.use('/chat', chatRouter);
-app.use('/dashboard', cors(), dashboardRouter);
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, './view/index.html'));
-});
+app.use(cors());
+app.use('/dashboard', dashboardRouter);
 
 app.use(function(req, res){
   res.send(404);
@@ -111,6 +107,21 @@ io.on('connection', socket => {
     mongooseUtil.saveMessage(user, message);
   });
 
+  // Listen for user leave
+  socket.on('leave', () => {
+    const user = userLeave(socket.id);
+
+    if(user) {
+      // Broadcast to other chatroom users when user leaves their chatroom
+      io.to(user.room).emit('newMessage', messageUtil.userLeftBot(user.username));
+
+      // Update current list of chatroom users
+      io.to(user.room).emit('roomUsers', {newRoom: user.room, newUsers: getRoomUsers(user.room)});
+
+      // Add USER LEFT CHATROOM event
+      mongooseUtil.saveEvent('LEFT ROOM', user);
+    }
+  });  
 
   // Listen for user disconnect
   socket.on('disconnect', () => {
@@ -129,5 +140,5 @@ io.on('connection', socket => {
   });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3001;
 server.listen(PORT, () => console.log(`Server running on localhost:${PORT}`));
