@@ -44,12 +44,3 @@ or
 
 node .\server\queries\retrieveChatHistory.js -u Alwayne -r Developers 
 returns chat history from user Alwayne in chat Developers
-
-
-
-
-The chat is also hosted via Digital Ocean on:
-157.230.105.204
-
-However, it has to be investigated as the server drops clients connections if idle for more than a few seconds.
-Some heartbeat mechanism would be needed.
